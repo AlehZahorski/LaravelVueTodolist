@@ -3,30 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Services\ItemService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class ItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    private $itemService;
+
+    public function __construct(ItemService $itemService)
     {
-        return Item::orderBy('created_at', 'DESC')->get();
+        $this->itemService = $itemService;
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Resources\ItemCollection
      */
-    public function create()
+    public function index()
     {
-        //
+        return $this->itemService->index();
     }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show($id)
+    {
+        $itemService = $this->itemService->show($id);
+        return ($itemService) ? $itemService : 'Page Not Found';
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -41,28 +49,6 @@ class ItemController extends Controller
         $newItem->save();
 
         return $newItem;
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

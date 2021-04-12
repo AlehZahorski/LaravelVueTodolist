@@ -20,7 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //after ending this course - change it on RESTFul API
-Route::get('/items', [ItemController::class, 'index']);
+Route::apiResource('/items', ItemController::class);
 Route::prefix('/item')->group( function(){
     Route::post('/store',[ItemController::class, 'store']);
     Route::put('/{id}',[ItemController::class, 'update']);
