@@ -19,7 +19,7 @@
         methods: {
             updateCheck() {
                 axios.put('api/item/' + this.item.id, {
-                    item: this.item
+                    completed: this.item.completed
                 })
                     .then( response => {
                         if( response.status === 200){

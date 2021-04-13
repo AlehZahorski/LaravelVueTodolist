@@ -14,10 +14,14 @@ class ItemTest extends TestCase
     private function getFakeItemsDataForCreate(): array
     {
         return [
-            'item' => [
-                'name' => 'test',
-                'completed' => false
-            ]
+            'name' => $this->faker->text
+        ];
+    }
+
+    private function getFakeItemsDataForUpdate(): array
+    {
+        return [
+            'completed' => $this->faker->boolean
         ];
     }
 
@@ -25,7 +29,18 @@ class ItemTest extends TestCase
     {
         $this
             ->get('/api/items')
-            ->assertOk();
+            ->assertOk()
+            ->assertJsonStructure([
+                'success',
+                'data' => [
+                    '*' => [
+                        'id',
+                        'name',
+                        'completed',
+                        'completed_at',
+                        ]
+                ]
+            ]);
     }
 
     public function test_user_can_get_item()
@@ -37,8 +52,21 @@ class ItemTest extends TestCase
 
     public function test_user_can_create_item()
     {
-        $this->post('/api/items',
+        $this->post('/api/item/store',
             $this->getFakeItemsDataForCreate())
             ->assertCreated();
+    }
+
+    public function test_user_can_update_item()
+    {
+        $this->put('/api/item/1',
+            $this->getFakeItemsDataForUpdate())
+            ->assertOk();
+    }
+
+    public function test_user_can_delete_item()
+    {
+        $this->delete('/api/item/1')
+            ->assertOk();
     }
 }

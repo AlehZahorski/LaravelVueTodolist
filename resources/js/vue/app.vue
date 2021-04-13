@@ -31,7 +31,7 @@ import ListView from "./listView";
             getList () {
                 axios.get('api/items')
                 .then( response => {
-                    this.items = response.data
+                    this.items = response.data.data
                 })
                 .catch( error => {
                     console.log( error );

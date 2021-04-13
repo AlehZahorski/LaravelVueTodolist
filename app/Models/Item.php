@@ -12,7 +12,6 @@ class Item extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'id',
         'name',
         'completed',
         'completed_at'

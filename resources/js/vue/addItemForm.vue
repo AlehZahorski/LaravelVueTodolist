@@ -23,19 +23,23 @@
                 if(this.item.name === ''){
                     return;
                 }
+                if(this.item.name.length <= 2){
+                    alert('Must be more than 2 symbols, if u want adding new task!')
+                }else{
+                    axios.post('api/item/store',{
+                        name: this.item.name
 
-                axios.post('api/item/store',{
-                    item: this.item
-                })
-                .then(response => {
-                    if(response.status === 201){
-                        this.item.name = "";
-                        this.$emit('reloadlist')
-                    }
-                })
-                .catch( error => {
-                    console.log( error );
-                })
+                    })
+                        .then(response => {
+                            if(response.status === 201){
+                                this.item.name = "";
+                                this.$emit('reloadlist')
+                            }
+                        })
+                        .catch( error => {
+                            console.log( error );
+                        })
+                }
             }
         }
     }
